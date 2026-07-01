@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node \"C:\\\\Users\\\\HP\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--Frelancing-fenil-portfolio\\\\038a2c45-f87e-4719-ad2d-598f8ecc06eb\\\\scratchpad\\\\verify-projects.mjs\")",
+      "Bash(node -e ' *)"
+    ]
+  }
+}
