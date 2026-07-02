@@ -430,16 +430,16 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative w-full max-w-screen-xl mx-auto px-6 lg:px-12 flex items-center min-h-screen">
+      <div className="relative w-full max-w-screen-xl mx-auto px-6 lg:px-12 flex items-center min-h-screen py-28 max-[470px]:py-12 lg:py-0">
 
         {/* 3-column content area */}
-        <div className="flex flex-1 items-center gap-4 lg:gap-8">
+        <div className="flex flex-col items-center gap-10 w-full sm:gap-12 lg:flex-row lg:items-center lg:gap-8">
 
           {/* ── Col 1: Text ── */}
-          <div className="flex-1 min-w-0 z-10 py-20 lg:py-0">
+          <div className="flex-1 min-w-0 z-10 w-full text-center lg:text-left lg:py-0">
             {/* Label */}
             <motion.div
-              className="flex items-center gap-3 mb-6"
+              className="flex items-center justify-center gap-3 mb-6 lg:justify-start"
               initial={{ opacity: 0, x: -24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.55, delay: 0.1 }}
@@ -469,7 +469,7 @@ export default function Hero() {
 
             {/* Description */}
             <motion.p
-              className="text-sm leading-relaxed mb-8 max-w-xs"
+              className="text-sm leading-relaxed mb-8 max-w-xs mx-auto lg:mx-0"
               style={{ color: "rgba(255,255,255,0.55)" }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -499,108 +499,119 @@ export default function Hero() {
 
           {/* ── Col 2: Circular image with orbiting icons ── */}
           <div
-            className="relative flex-shrink-0 hidden md:flex items-center justify-center"
-            style={{ width: 480, height: 480 }}
+            className="relative flex-shrink-0 flex items-center justify-center w-60 h-60 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px]"
           >
-            {/* Outer decorative ring */}
             <div
-              className="absolute rounded-full pointer-events-none"
-              style={{
-                width: 458,
-                height: 458,
-                border: "1px solid rgba(247,37,133,0.22)",
-                boxShadow: "0 0 36px rgba(247,37,133,0.07)",
-              }}
-            />
-
-            {/* Inner dashed ring */}
-            <div
-              className="absolute rounded-full pointer-events-none"
-              style={{
-                width: 335,
-                height: 335,
-                border: "1px dashed rgba(99,102,241,0.3)",
-              }}
-            />
-
-            {/* Background glow */}
-            <div
-              className="absolute rounded-full pointer-events-none"
-              style={{
-                width: 285,
-                height: 285,
-                background:
-                  "radial-gradient(circle, rgba(247,37,133,0.16) 0%, rgba(99,102,241,0.08) 55%, transparent 80%)",
-                filter: "blur(26px)",
-              }}
-            />
-
-            {/* Circular photo */}
-            <div
-              className="relative z-10 rounded-full overflow-hidden select-none"
-              style={{
-                width: 268,
-                height: 268,
-                border: "2.5px solid rgba(247,37,133,0.5)",
-                boxShadow:
-                  "0 0 50px rgba(247,37,133,0.26), 0 0 100px rgba(99,102,241,0.13)",
-              }}
+              className="absolute top-0 left-0 origin-top-left scale-[0.5] sm:scale-[0.6667] md:scale-[0.8333] lg:scale-100"
+              style={{ width: 480, height: 480 }}
             >
-              <Image
-                src="/logo.png"
-                alt="Fenil RR"
-                fill
-                className="object-cover"
-                style={{ objectPosition: "center 8%" }}
-                priority
+              {/* Outer decorative ring */}
+              <div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: 458,
+                  height: 458,
+                  top: 11,
+                  left: 11,
+                  border: "1px solid rgba(247,37,133,0.22)",
+                  boxShadow: "0 0 36px rgba(247,37,133,0.07)",
+                }}
               />
-            </div>
 
-            {/* Orbit wrapper — rotates clockwise continuously */}
-            <motion.div
-              className="absolute"
-              style={{ width: 480, height: 480, top: 0, left: 0 }}
-              animate={{ rotate: 360 }}
-              transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-            >
-              {TOOLS.map((tool, i) => {
-                const angle = (i / TOOLS.length) * 2 * Math.PI - Math.PI / 2;
-                const r = 205, cx = 240, cy = 240, s = 48;
-                const left = cx + r * Math.cos(angle) - s / 2;
-                const top  = cy + r * Math.sin(angle) - s / 2;
-                return (
-                  <motion.div
-                    key={tool.id}
-                    className="absolute z-20 flex items-center justify-center rounded-full font-bold"
-                    style={{
-                      left,
-                      top,
-                      width: s,
-                      height: s,
-                      background: "#12102e",
-                      border: `1.5px solid ${tool.color}55`,
-                      boxShadow: `0 0 18px ${tool.glow}, inset 0 0 8px ${tool.glow}`,
-                      color: tool.color,
-                    }}
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1, rotate: -360 }}
-                    transition={{
-                      opacity: { duration: 0.4, delay: tool.delay },
-                      scale:   { duration: 0.4, delay: tool.delay, ease: [0.34, 1.56, 0.64, 1] },
-                      rotate:  { duration: 22, repeat: Infinity, ease: "linear" },
-                    }}
-                  >
-                    <tool.Icon size={22} />
-                  </motion.div>
-                );
-              })}
-            </motion.div>
+              {/* Inner dashed ring */}
+              <div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: 335,
+                  height: 335,
+                  top: 72.5,
+                  left: 72.5,
+                  border: "1px dashed rgba(99,102,241,0.3)",
+                }}
+              />
+
+              {/* Background glow */}
+              <div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: 285,
+                  height: 285,
+                  top: 97.5,
+                  left: 97.5,
+                  background:
+                    "radial-gradient(circle, rgba(247,37,133,0.16) 0%, rgba(99,102,241,0.08) 55%, transparent 80%)",
+                  filter: "blur(26px)",
+                }}
+              />
+
+              {/* Circular photo */}
+              <div
+                className="absolute z-10 rounded-full overflow-hidden select-none"
+                style={{
+                  width: 268,
+                  height: 268,
+                  top: 106,
+                  left: 106,
+                  border: "2.5px solid rgba(247,37,133,0.5)",
+                  boxShadow:
+                    "0 0 50px rgba(247,37,133,0.26), 0 0 100px rgba(99,102,241,0.13)",
+                }}
+              >
+                <Image
+                  src="/logo.png"
+                  alt="Fenil RR"
+                  fill
+                  className="object-cover"
+                  style={{ objectPosition: "center 8%" }}
+                  priority
+                />
+              </div>
+
+              {/* Orbit wrapper — rotates clockwise continuously */}
+              <motion.div
+                className="absolute"
+                style={{ width: 480, height: 480, top: 0, left: 0 }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+              >
+                {TOOLS.map((tool, i) => {
+                  const angle = (i / TOOLS.length) * 2 * Math.PI - Math.PI / 2;
+                  const r = 205, cx = 240, cy = 240, s = 48;
+                  const left = cx + r * Math.cos(angle) - s / 2;
+                  const top  = cy + r * Math.sin(angle) - s / 2;
+                  return (
+                    <motion.div
+                      key={tool.id}
+                      className="absolute z-20 flex items-center justify-center rounded-full font-bold"
+                      style={{
+                        left,
+                        top,
+                        width: s,
+                        height: s,
+                        background: "#12102e",
+                        border: `1.5px solid ${tool.color}55`,
+                        boxShadow: `0 0 18px ${tool.glow}, inset 0 0 8px ${tool.glow}`,
+                        color: tool.color,
+                      }}
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1, rotate: -360 }}
+                      transition={{
+                        opacity: { duration: 0.4, delay: tool.delay },
+                        scale:   { duration: 0.4, delay: tool.delay, ease: [0.34, 1.56, 0.64, 1] },
+                        rotate:  { duration: 22, repeat: Infinity, ease: "linear" },
+                      }}
+                    >
+                      <tool.Icon size={22} />
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            </div>
           </div>
 
           {/* ── Col 3: Stats ── */}
           <div
-            className="flex-shrink-0 hidden lg:flex flex-col gap-0 pl-8"
-            style={{ borderLeft: "1px solid rgba(255,255,255,0.1)" }}
+            className="flex-shrink-0 flex flex-wrap justify-center gap-x-6 gap-y-2 pt-2 lg:flex-col lg:flex-nowrap lg:gap-0 lg:pl-8 lg:pt-0 lg:border-l lg:border-white/10"
           >
             {STATS.map((stat, i) => (
               <motion.div
@@ -609,10 +620,10 @@ export default function Hero() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.55, delay: 0.35 + i * 0.15 }}
               >
-                <div className="py-6 text-center w-28">
+                <div className="py-2 text-center w-24 lg:py-6 lg:w-28">
                   <div
                     className="font-display font-bold leading-none mb-1"
-                    style={{ fontSize: "2.4rem", color: "#ffffff" }}
+                    style={{ fontSize: "1.8rem", color: "#ffffff" }}
                   >
                     {stat.value}
                   </div>
@@ -624,7 +635,7 @@ export default function Hero() {
                   </div>
                 </div>
                 {i < STATS.length - 1 && (
-                  <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
+                  <div className="hidden lg:block" style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
                 )}
               </motion.div>
             ))}

@@ -23,7 +23,7 @@ export default function About() {
       {/* Main container */}
       <motion.div
         style={{ opacity, y }}
-        className="relative mx-auto flex min-h-screen max-w-[1400px] flex-col items-center justify-center px-8 py-24 lg:px-12 xl:px-16"
+        className="relative mx-auto flex min-h-screen max-w-[1400px] flex-col items-center justify-center px-4 py-24 sm:px-6 lg:px-12 xl:px-16"
       >
         {/* Section Header */}
         <motion.div

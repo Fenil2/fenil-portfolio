@@ -33,7 +33,7 @@ export default function AboutSection() {
     // Create a temporary link element to trigger the download
     const link = document.createElement('a');
     link.href = '/cv.pdf'; // Path to your CV file in the public directory
-    link.download = 'Siva_S_CV.pdf'; // Name of the downloaded file
+    link.download = 'Fenil_RR_CV.pdf'; // Name of the downloaded file
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -93,13 +93,13 @@ export default function AboutSection() {
             className="flex w-full items-center justify-center lg:w-[450px] xl:w-[500px]"
           >
             <ProfileCard
-              name="Siva S"
+              name="Fenil RR"
               title="Web Developer"
-              handle="sivadev"
-              status="S.Siva Subramaniam"
+              handle="fenilrr"
+              status="Fenil RR"
               contactText="Hire Me"
-              avatarUrl="/cartoon3.png"
-              miniAvatarUrl="/image1.jpeg"
+              avatarUrl="/cini.png"
+              miniAvatarUrl="/logo.png"
               showUserInfo={true}
               enableTilt={true}
               enableMobileTilt={false}
@@ -177,7 +177,7 @@ export default function AboutSection() {
                 a keen eye for design, I transform ideas into seamless digital experiences.
               </p>
               <p className="max-w-[600px] text-[0.875rem] leading-[1.6] text-gray-300/90 sm:text-[0.9rem] md:text-[0.95rem]">
-                Currently working at <span className="font-semibold text-white">Pyramidions Solutions</span>,
+                Currently working at <span className="font-semibold text-white">Grow Medico</span>,
                 I've helped numerous clients bring their visions to life through clean code
                 and innovative solutions.
               </p>
