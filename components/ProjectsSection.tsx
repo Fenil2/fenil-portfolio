@@ -28,12 +28,60 @@ interface ProjectsSectionProps {
   projects: Project[];
 }
 
+const AUTOPLAY_INTERVAL_MS = 3000;
+
 const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [canScroll, setCanScroll] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isTouching, setIsTouching] = useState(false);
+  const [hasKeyboardFocus, setHasKeyboardFocus] = useState(false);
+  const [isOnScreen, setIsOnScreen] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
+
+  const isAutoplayPaused =
+    !canScroll || !isOnScreen || isHovered || isTouching || hasKeyboardFocus || isModalOpen;
+
+  const scrollByCard = (direction: 1 | -1) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const card = track.querySelector('.project-card') as HTMLElement | null;
+    const step = card ? card.offsetWidth + 24 : track.clientWidth;
+    track.scrollBy({ left: direction * step, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsOnScreen(entry.isIntersecting),
+      { threshold: 0.3 }
+    );
+    observer.observe(track);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isAutoplayPaused) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const timer = window.setInterval(() => {
+      const track = trackRef.current;
+      if (!track || document.hidden) return;
+
+      const isAtEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+      if (isAtEnd) {
+        track.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        scrollByCard(1);
+      }
+    }, AUTOPLAY_INTERVAL_MS);
+
+    return () => window.clearInterval(timer);
+  }, [isAutoplayPaused]);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -49,14 +97,6 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
     resizeObserver.observe(track);
     return () => resizeObserver.disconnect();
   }, [projects]);
-
-  const scrollByCard = (direction: 1 | -1) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const card = track.querySelector('.project-card') as HTMLElement | null;
-    const step = card ? card.offsetWidth + 24 : track.clientWidth;
-    track.scrollBy({ left: direction * step, behavior: 'smooth' });
-  };
 
   const handleDetailsClick = (project: Project) => {
     setSelectedProject(project);
@@ -122,7 +162,16 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
         </motion.div>
 
         {/* Right Section - Projects Carousel */}
-        <div className="projects-grid-wrapper">
+        <div
+          className="projects-grid-wrapper"
+          onPointerEnter={(e) => { if (e.pointerType === 'mouse') setIsHovered(true); }}
+          onPointerLeave={(e) => { if (e.pointerType === 'mouse') setIsHovered(false); }}
+          onTouchStart={() => setIsTouching(true)}
+          onTouchEnd={() => setIsTouching(false)}
+          onTouchCancel={() => setIsTouching(false)}
+          onFocus={(e) => setHasKeyboardFocus(e.target.matches(':focus-visible'))}
+          onBlur={() => setHasKeyboardFocus(false)}
+        >
           <button
             type="button"
             className={`carousel-nav-btn carousel-nav-prev ${canScroll ? '' : 'is-hidden'}`}
@@ -144,7 +193,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
               viewport={{ once: true }}
               transition={{
                 duration: 0.6,
-                delay: index * 0.15,
+                delay: Math.min(index, 2) * 0.15,
                 ease: [0.6, 0.05, 0.01, 0.9]
               }}
               onHoverStart={() => setHoveredProject(project.id)}

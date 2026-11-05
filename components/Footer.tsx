@@ -272,7 +272,7 @@ const Footer = () => {
               >
                 ♥
               </motion.span>
-              by You
+              by Fenil RR
             </motion.span>
             <span className="footer-separator">•</span>
             <motion.span
